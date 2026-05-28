@@ -1,0 +1,97 @@
+<div class="list-container">
+  <div class="header">
+    <h1>Gestión de Pagos</h1>
+    <div class="stats">
+      <div class="stat-card">
+        <p>Pagos Pendientes</p>
+        <h3>{{ pagosPendientes }}</h3>
+      </div>
+      <button class="btn btn-warning" (click)="toggleAtrasados()">
+        ⚠️ Ver Atrasados ({{ pagosAtrasados.length }})
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="mostraAtrasados && pagosAtrasados.length > 0" class="atrasados-section">
+    <h2>⚠️ Pagos Atrasados</h2>
+    <div class="table-responsive">
+      <table class="table table-atrasados">
+        <thead>
+          <tr>
+            <th>Préstamo</th>
+            <th>Monto</th>
+            <th>Número</th>
+            <th>Fecha Programada</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pago of pagosAtrasados">
+            <td>{{ getNombrePrestamoCliente(pago.prestamoId) }}</td>
+            <td>{{ pago.monto | currency }}</td>
+            <td>{{ pago.numero }}</td>
+            <td>{{ pago.fechaProgramada | date: 'short' }}</td>
+            <td>
+              <span [ngClass]="getEstadoClass(pago.estado)">
+                {{ pago.estado }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-success" (click)="marcarPagado(pago.id)">
+                Pagar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="cargando" class="loading">Cargando...</div>
+
+  <div *ngIf="!cargando" class="table-responsive">
+    <h2>Todos los Pagos</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Préstamo</th>
+          <th>Monto</th>
+          <th>Número</th>
+          <th>Fecha Programada</th>
+          <th>Fecha Pago</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pago of pagos">
+          <td>{{ getNombrePrestamoCliente(pago.prestamoId) }}</td>
+          <td>{{ pago.monto | currency }}</td>
+          <td>{{ pago.numero }}</td>
+          <td>{{ pago.fechaProgramada | date: 'short' }}</td>
+          <td>{{ pago.fechaPago ? (pago.fechaPago | date: 'short') : '-' }}</td>
+          <td>
+            <span [ngClass]="getEstadoClass(pago.estado)">
+              {{ pago.estado }}
+            </span>
+          </td>
+          <td>
+            <button
+              class="btn btn-success"
+              (click)="marcarPagado(pago.id)"
+              *ngIf="!pago.fechaPago"
+            >
+              Pagar
+            </button>
+            <button class="btn btn-delete" (click)="eliminarPago(pago.id)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

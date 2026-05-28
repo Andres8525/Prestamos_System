@@ -1,0 +1,25 @@
+.nav-menu {
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+  width: 250px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .nav-header {
+    padding: 20px 16px;
+    border-bottom: 1px solid #e0e0e0;
+
+    h2 {
+      margin: 0;
+      color: #1976d2;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .nav-items {
+    flex: 1;
+    padding: 8px 0;
+  }
+}

@@ -1,0 +1,16 @@
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\CobroApplication.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\config\WebConfig.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\controller\ClienteController.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\controller\PagoController.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\controller\PrestamoController.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\model\Cliente.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\model\EstadoPago.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\model\Pago.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\model\Prestamo.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\model\TipoLiquidacion.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\repository\ClienteRepository.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\repository\PagoRepository.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\repository\PrestamoRepository.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\service\ClienteService.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\service\PagoService.java
+C:\S6\POO\FINAL_POO\backend\cobro\src\main\java\com\example\cobro\service\PrestamoService.java

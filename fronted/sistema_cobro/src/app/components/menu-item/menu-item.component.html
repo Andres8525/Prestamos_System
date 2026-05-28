@@ -1,0 +1,8 @@
+<a
+  [routerLink]="item.route"
+  routerLinkActive="active"
+  class="menu-item"
+>
+  <span class="icon" *ngIf="item.icon">{{ item.icon }}</span>
+  <span class="label">{{ item.label }}</span>
+</a>
