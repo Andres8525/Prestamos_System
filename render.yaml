@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: cobro-backend
+    runtime: docker
+    dockerfilePath: ./backend/cobro/Dockerfile
+    dockerContext: ./backend/cobro
+    plan: free
+    region: oregon
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:4200
