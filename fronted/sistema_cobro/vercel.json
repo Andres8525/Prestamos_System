@@ -1,4 +1,5 @@
 {
+  "installCommand": "npm install --legacy-peer-deps",
   "buildCommand": "node node_modules/@angular/cli/bin/ng.js build --configuration production",
   "outputDirectory": "dist/sistema_cobro/browser",
   "rewrites": [
