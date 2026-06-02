@@ -1,85 +1,88 @@
-<div class="dashboard-container">
-  <h1>📊 Panel de Control</h1>
+<div class="dashboard">
+  <div class="page-header">
+    <h1>Panel de Control</h1>
+  </div>
 
-  <div *ngIf="error" class="error-message">{{ error }}</div>
+  @if (error) {
+    <div class="alert alert-error">{{ error }}</div>
+  }
 
-  <div *ngIf="cargando" class="loading">Cargando datos...</div>
+  @if (cargando) {
+    <div class="loading-text">Cargando datos...</div>
+  }
 
-  <div *ngIf="!cargando" class="stats-grid">
-    <div class="stat-card total">
-      <div class="stat-content">
-        <h3>Total Clientes</h3>
+  @if (!cargando) {
+    <div class="stats-grid">
+      <div class="stat-card stat-total">
+        <p class="stat-label">Total Préstamos</p>
         <p class="stat-value">{{ getTotalClientes() }}</p>
       </div>
-    </div>
-
-    <div class="stat-card al-dia">
-      <div class="stat-content">
-        <h3>🟢 Al Día</h3>
+      <div class="stat-card stat-green">
+        <p class="stat-label">Al Día</p>
         <p class="stat-value">{{ clientesAlDia.length }}</p>
       </div>
-    </div>
-
-    <div class="stat-card pendiente">
-      <div class="stat-content">
-        <h3>🟡 Pendientes</h3>
+      <div class="stat-card stat-yellow">
+        <p class="stat-label">Pendientes</p>
         <p class="stat-value">{{ clientesPendientes.length }}</p>
       </div>
-    </div>
-
-    <div class="stat-card atrasado">
-      <div class="stat-content">
-        <h3>🔴 Atrasados</h3>
+      <div class="stat-card stat-red">
+        <p class="stat-label">Atrasados</p>
         <p class="stat-value">{{ clientesAtrasados.length }}</p>
       </div>
-    </div>
-
-    <div class="stat-card pagos">
-      <div class="stat-content">
-        <h3>💳 Pagos Pendientes</h3>
+      <div class="stat-card stat-blue">
+        <p class="stat-label">Pagos Pendientes</p>
         <p class="stat-value">{{ pagosPendientes }}</p>
       </div>
     </div>
-  </div>
 
-  <div class="sections">
-    <section class="dashboard-section">
-      <h2>🟢 Clientes Al Día</h2>
-      <div *ngIf="clientesAlDia.length === 0" class="empty-state">
-        No hay clientes al día
+    <div class="sections-grid">
+      <div class="card">
+        <h2 class="section-title section-green">Al Día</h2>
+        @if (clientesAlDia.length === 0) {
+          <div class="empty-state">Sin registros</div>
+        } @else {
+          <div class="client-list">
+            @for (prestamo of clientesAlDia; track prestamo.id) {
+              <div class="client-row">
+                <span class="client-name">{{ prestamo.cliente?.nombre }}</span>
+                <span class="badge badge-success">{{ prestamo.cliente?.cedula }}</span>
+              </div>
+            }
+          </div>
+        }
       </div>
-      <div *ngIf="clientesAlDia.length > 0" class="client-list">
-        <div *ngFor="let prestamo of clientesAlDia" class="client-item">
-          <strong>{{ prestamo.cliente?.nombre }}</strong>
-          <span class="cedula">{{ prestamo.cliente?.cedula }}</span>
-        </div>
-      </div>
-    </section>
 
-    <section class="dashboard-section">
-      <h2>🟡 Clientes Pendientes</h2>
-      <div *ngIf="clientesPendientes.length === 0" class="empty-state">
-        No hay clientes pendientes
+      <div class="card">
+        <h2 class="section-title section-yellow">Pendientes</h2>
+        @if (clientesPendientes.length === 0) {
+          <div class="empty-state">Sin registros</div>
+        } @else {
+          <div class="client-list">
+            @for (prestamo of clientesPendientes; track prestamo.id) {
+              <div class="client-row">
+                <span class="client-name">{{ prestamo.cliente?.nombre }}</span>
+                <span class="badge badge-warning">{{ prestamo.cliente?.cedula }}</span>
+              </div>
+            }
+          </div>
+        }
       </div>
-      <div *ngIf="clientesPendientes.length > 0" class="client-list">
-        <div *ngFor="let prestamo of clientesPendientes" class="client-item">
-          <strong>{{ prestamo.cliente?.nombre }}</strong>
-          <span class="cedula">{{ prestamo.cliente?.cedula }}</span>
-        </div>
-      </div>
-    </section>
 
-    <section class="dashboard-section">
-      <h2>🔴 Clientes Atrasados</h2>
-      <div *ngIf="clientesAtrasados.length === 0" class="empty-state">
-        No hay clientes atrasados
+      <div class="card">
+        <h2 class="section-title section-red">Atrasados</h2>
+        @if (clientesAtrasados.length === 0) {
+          <div class="empty-state">Sin registros</div>
+        } @else {
+          <div class="client-list">
+            @for (prestamo of clientesAtrasados; track prestamo.id) {
+              <div class="client-row">
+                <span class="client-name">{{ prestamo.cliente?.nombre }}</span>
+                <span class="badge badge-danger">{{ prestamo.cliente?.cedula }}</span>
+              </div>
+            }
+          </div>
+        }
       </div>
-      <div *ngIf="clientesAtrasados.length > 0" class="client-list">
-        <div *ngFor="let prestamo of clientesAtrasados" class="client-item">
-          <strong>{{ prestamo.cliente?.nombre }}</strong>
-          <span class="cedula">{{ prestamo.cliente?.cedula }}</span>
-        </div>
-      </div>
-    </section>
-  </div>
+    </div>
+  }
 </div>

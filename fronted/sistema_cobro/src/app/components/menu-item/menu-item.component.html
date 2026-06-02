@@ -2,7 +2,15 @@
   [routerLink]="item.route"
   routerLinkActive="active"
   class="menu-item"
+  [class.collapsed]="collapsed"
+  [title]="collapsed ? item.label : ''"
 >
-  <span class="icon" *ngIf="item.icon">{{ item.icon }}</span>
-  <span class="label">{{ item.label }}</span>
+  <span class="icon">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+      <path [attr.d]="getPath()" />
+    </svg>
+  </span>
+  @if (!collapsed) {
+    <span class="label">{{ item.label }}</span>
+  }
 </a>

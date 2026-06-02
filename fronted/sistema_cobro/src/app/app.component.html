@@ -1,5 +1,5 @@
-<div class="app-container">
-  <app-nav-menu></app-nav-menu>
+<div class="app-container" [class.sidebar-collapsed]="sidebarCollapsed">
+  <app-nav-menu (collapsedChange)="sidebarCollapsed = $event"></app-nav-menu>
   <div class="main-content">
     <router-outlet></router-outlet>
   </div>

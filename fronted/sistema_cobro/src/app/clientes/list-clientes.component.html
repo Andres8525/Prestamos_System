@@ -1,89 +1,79 @@
 <div class="list-container">
-  <div class="header">
+  <div class="page-header">
     <h1>Gestión de Clientes</h1>
     <button class="btn btn-primary" (click)="toggleFormulario()">
       {{ mostraFormulario ? 'Cancelar' : '+ Nuevo Cliente' }}
     </button>
   </div>
 
-  <div *ngIf="error" class="error-message">{{ error }}</div>
+  @if (error) {
+    <div class="alert alert-error">{{ error }}</div>
+  }
 
-  <div *ngIf="mostraFormulario" class="formulario">
-    <h2>{{ clienteEnEdicion ? 'Editar Cliente' : 'Crear Cliente' }}</h2>
-    <form (ngSubmit)="guardarCliente()">
-      <div class="form-group">
-        <label for="cedula">Cédula:</label>
-        <input
-          type="text"
-          id="cedula"
-          [(ngModel)]="nuevoCliente.cedula"
-          name="cedula"
-          placeholder="Ingrese la cédula"
-        />
-      </div>
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input
-          type="text"
-          id="nombre"
-          [(ngModel)]="nuevoCliente.nombre"
-          name="nombre"
-          placeholder="Ingrese el nombre"
-        />
-      </div>
-      <div class="form-group">
-        <label for="direccion">Dirección:</label>
-        <input
-          type="text"
-          id="direccion"
-          [(ngModel)]="nuevoCliente.direccion"
-          name="direccion"
-          placeholder="Ingrese la dirección"
-        />
-      </div>
-      <div class="form-group">
-        <label for="telefono">Teléfono:</label>
-        <input
-          type="text"
-          id="telefono"
-          [(ngModel)]="nuevoCliente.telefono"
-          name="telefono"
-          placeholder="Ingrese el teléfono"
-        />
-      </div>
-      <button type="submit" class="btn btn-success">Guardar</button>
-    </form>
-  </div>
+  @if (mostraFormulario) {
+    <div class="card">
+      <h2 class="form-title">{{ clienteEnEdicion ? 'Editar Cliente' : 'Crear Cliente' }}</h2>
+      <form (ngSubmit)="guardarCliente()" class="form-grid">
+        <div class="form-group">
+          <label for="cedula">Cédula</label>
+          <input type="text" id="cedula" [(ngModel)]="nuevoCliente.cedula"
+                 name="cedula" placeholder="Ingrese la cédula" />
+        </div>
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" [(ngModel)]="nuevoCliente.nombre"
+                 name="nombre" placeholder="Ingrese el nombre" />
+        </div>
+        <div class="form-group">
+          <label for="direccion">Dirección</label>
+          <input type="text" id="direccion" [(ngModel)]="nuevoCliente.direccion"
+                 name="direccion" placeholder="Ingrese la dirección" />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="text" id="telefono" [(ngModel)]="nuevoCliente.telefono"
+                 name="telefono" placeholder="Ingrese el teléfono" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
+    </div>
+  }
 
-  <div *ngIf="cargando" class="loading">Cargando...</div>
-
-  <div *ngIf="!cargando" class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Cédula</th>
-          <th>Nombre</th>
-          <th>Dirección</th>
-          <th>Teléfono</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cliente of clientes">
-          <td>{{ cliente.cedula }}</td>
-          <td>{{ cliente.nombre }}</td>
-          <td>{{ cliente.direccion }}</td>
-          <td>{{ cliente.telefono }}</td>
-          <td>
-            <button class="btn btn-edit" (click)="editarCliente(cliente)">
-              Editar
-            </button>
-            <button class="btn btn-delete" (click)="eliminarCliente(cliente.id)">
-              Eliminar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  @if (cargando) {
+    <div class="loading-text">Cargando...</div>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (cliente of clientes; track cliente.id) {
+            <tr>
+              <td>{{ cliente.cedula }}</td>
+              <td>{{ cliente.nombre }}</td>
+              <td>{{ cliente.direccion }}</td>
+              <td>{{ cliente.telefono }}</td>
+              <td class="actions-cell">
+                <button class="btn btn-primary btn-sm" (click)="editarCliente(cliente)">
+                  Editar
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarCliente(cliente.id)">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </div>

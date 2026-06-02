@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 export interface MenuItem {
   label: string;
   route: string;
-  icon?: string;
+  icon: string;
 }
 
 @Injectable({
@@ -11,10 +11,10 @@ export interface MenuItem {
 })
 export class MenuService {
   private menuItems: MenuItem[] = [
-    { label: 'Dashboard', route: '/dashboard', icon: '📊' },
-    { label: 'Clientes', route: '/clientes', icon: '👥' },
-    { label: 'Préstamos', route: '/prestamos', icon: '💰' },
-    { label: 'Pagos', route: '/pagos', icon: '💳' }
+    { label: 'Dashboard', route: '/dashboard', icon: 'dashboard' },
+    { label: 'Clientes',  route: '/clientes',  icon: 'clients'   },
+    { label: 'Préstamos', route: '/prestamos', icon: 'loans'     },
+    { label: 'Pagos',     route: '/pagos',     icon: 'payments'  }
   ];
 
   obtenerMenuItems(): MenuItem[] {
