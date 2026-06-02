@@ -19,4 +19,11 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
     List<Pago> findByEstado(EstadoPago estado);
 
     long countByEstado(EstadoPago estado);
+
+    List<Pago> findByPrestamo_IdAndFechaPagoIsNotNull(Long prestamoId);
+
+    @org.springframework.data.jpa.repository.Query(
+        "SELECT COUNT(p) FROM Pago p WHERE p.fechaPago IS NOT NULL AND YEAR(p.fechaPago) = :year AND MONTH(p.fechaPago) = :month")
+    long countRealizadosByMes(@org.springframework.data.repository.query.Param("year") int year,
+                              @org.springframework.data.repository.query.Param("month") int month);
 }

@@ -1,5 +1,6 @@
 package com.example.cobro.controller;
 
+import com.example.cobro.dto.PagoResponseDTO;
 import com.example.cobro.model.Pago;
 import com.example.cobro.service.PagoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/pagos")
@@ -17,35 +19,40 @@ public class PagoController {
     private PagoService pagoService;
 
     @GetMapping
-    public ResponseEntity<List<Pago>> listar() {
-        return ResponseEntity.ok(pagoService.listarPagos());
+    public ResponseEntity<List<PagoResponseDTO>> listar() {
+        return ResponseEntity.ok(pagoService.listarPagos().stream()
+                .map(PagoResponseDTO::fromEntity).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pago> obtener(@PathVariable Long id) {
+    public ResponseEntity<PagoResponseDTO> obtener(@PathVariable Long id) {
         return pagoService.obtenerPago(id)
-                .map(ResponseEntity::ok)
+                .map(p -> ResponseEntity.ok(PagoResponseDTO.fromEntity(p)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/prestamo/{prestamoId}")
-    public ResponseEntity<List<Pago>> listarPorPrestamo(@PathVariable Long prestamoId) {
-        return ResponseEntity.ok(pagoService.listarPorPrestamo(prestamoId));
+    public ResponseEntity<List<PagoResponseDTO>> listarPorPrestamo(@PathVariable Long prestamoId) {
+        return ResponseEntity.ok(pagoService.listarPorPrestamo(prestamoId).stream()
+                .map(PagoResponseDTO::fromEntity).collect(Collectors.toList()));
     }
 
     @GetMapping("/prestamo/{prestamoId}/pendientes")
-    public ResponseEntity<List<Pago>> listarPendientes(@PathVariable Long prestamoId) {
-        return ResponseEntity.ok(pagoService.listarPendientesPorPrestamo(prestamoId));
+    public ResponseEntity<List<PagoResponseDTO>> listarPendientes(@PathVariable Long prestamoId) {
+        return ResponseEntity.ok(pagoService.listarPendientesPorPrestamo(prestamoId).stream()
+                .map(PagoResponseDTO::fromEntity).collect(Collectors.toList()));
     }
 
     @GetMapping("/prestamo/{prestamoId}/realizados")
-    public ResponseEntity<List<Pago>> listarRealizados(@PathVariable Long prestamoId) {
-        return ResponseEntity.ok(pagoService.listarRealizadosPorPrestamo(prestamoId));
+    public ResponseEntity<List<PagoResponseDTO>> listarRealizados(@PathVariable Long prestamoId) {
+        return ResponseEntity.ok(pagoService.listarRealizadosPorPrestamo(prestamoId).stream()
+                .map(PagoResponseDTO::fromEntity).collect(Collectors.toList()));
     }
 
     @GetMapping("/atrasados")
-    public ResponseEntity<List<Pago>> listarAtrasados() {
-        return ResponseEntity.ok(pagoService.listarAtrasados());
+    public ResponseEntity<List<PagoResponseDTO>> listarAtrasados() {
+        return ResponseEntity.ok(pagoService.listarAtrasados().stream()
+                .map(PagoResponseDTO::fromEntity).collect(Collectors.toList()));
     }
 
     @GetMapping("/contar-pendientes")
@@ -56,7 +63,7 @@ public class PagoController {
     @PostMapping("/{id}/pagar")
     public ResponseEntity<?> marcarPagado(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(pagoService.marcarPagoRealizado(id));
+            return ResponseEntity.ok(PagoResponseDTO.fromEntity(pagoService.marcarPagoRealizado(id)));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
@@ -65,7 +72,7 @@ public class PagoController {
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Pago pago) {
         try {
-            return ResponseEntity.ok(pagoService.actualizarPago(id, pago));
+            return ResponseEntity.ok(PagoResponseDTO.fromEntity(pagoService.actualizarPago(id, pago)));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

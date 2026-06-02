@@ -40,7 +40,7 @@ public class PagoService {
 
     @Transactional(readOnly = true)
     public List<Pago> listarRealizadosPorPrestamo(Long prestamoId) {
-        return pagoRepository.findByPrestamo_IdAndEstado(prestamoId, EstadoPago.ATRASADO);
+        return pagoRepository.findByPrestamo_IdAndFechaPagoIsNotNull(prestamoId);
     }
 
     @Transactional(readOnly = true)
