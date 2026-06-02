@@ -41,10 +41,7 @@ export class PrestamoService {
   }
 
   crearPrestamo(clienteId: number, monto: number, tipoLiquidacion: string): Observable<Prestamo> {
-    return this.http.post<Prestamo>(
-      `${this.apiUrl}?clienteId=${clienteId}&monto=${monto}&tipoLiquidacion=${tipoLiquidacion}`,
-      {}
-    );
+    return this.http.post<Prestamo>(this.apiUrl, { clienteId, monto, tipoLiquidacion });
   }
 
   actualizarPrestamo(id: number, prestamo: Prestamo): Observable<Prestamo> {

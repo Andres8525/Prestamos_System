@@ -125,9 +125,9 @@ export class ListPagosComponent implements OnInit {
 
   getNombrePrestamoCliente(prestamoId: number): string {
     const prestamo = this.prestamos.find(p => p.id === prestamoId);
-    if (prestamo) {
-      return `ID: ${prestamoId} - Monto: ${prestamo.monto}`;
+    if (prestamo?.clienteNombre) {
+      return prestamo.clienteNombre;
     }
-    return `ID: ${prestamoId}`;
+    return `Préstamo #${prestamoId}`;
   }
 }

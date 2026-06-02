@@ -44,8 +44,7 @@
           <div class="client-list">
             @for (prestamo of clientesAlDia; track prestamo.id) {
               <div class="client-row">
-                <span class="client-name">{{ prestamo.cliente?.nombre }}</span>
-                <span class="badge badge-success">{{ prestamo.cliente?.cedula }}</span>
+                <span class="client-name">{{ prestamo.clienteNombre }}</span>
               </div>
             }
           </div>
@@ -60,8 +59,7 @@
           <div class="client-list">
             @for (prestamo of clientesPendientes; track prestamo.id) {
               <div class="client-row">
-                <span class="client-name">{{ prestamo.cliente?.nombre }}</span>
-                <span class="badge badge-warning">{{ prestamo.cliente?.cedula }}</span>
+                <span class="client-name">{{ prestamo.clienteNombre }}</span>
               </div>
             }
           </div>
@@ -76,8 +74,7 @@
           <div class="client-list">
             @for (prestamo of clientesAtrasados; track prestamo.id) {
               <div class="client-row">
-                <span class="client-name">{{ prestamo.cliente?.nombre }}</span>
-                <span class="badge badge-danger">{{ prestamo.cliente?.cedula }}</span>
+                <span class="client-name">{{ prestamo.clienteNombre }}</span>
               </div>
             }
           </div>

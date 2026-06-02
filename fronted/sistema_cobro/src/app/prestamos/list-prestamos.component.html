@@ -67,7 +67,7 @@
         <tbody>
           @for (prestamo of prestamos; track prestamo.id) {
             <tr>
-              <td>{{ obtenerNombreCliente(prestamo.clienteId) }}</td>
+              <td>{{ prestamo.clienteNombre || obtenerNombreCliente(prestamo.clienteId) }}</td>
               <td>{{ prestamo.monto | currency }}</td>
               <td>{{ prestamo.tasaInteres }}%</td>
               <td>{{ prestamo.tipoLiquidacion }}</td>

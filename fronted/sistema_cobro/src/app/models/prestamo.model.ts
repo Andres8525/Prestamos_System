@@ -12,7 +12,7 @@ export enum TipoLiquidacion {
 export interface Prestamo {
   id?: number;
   clienteId?: number;
-  cliente?: any;
+  clienteNombre?: string;
   monto: number;
   tasaInteres?: number;
   montoTotal?: number;
