@@ -10,16 +10,11 @@ import { Cliente } from '../models/cliente.model';
 })
 export class ListClientesComponent implements OnInit {
   clientes: Cliente[] = [];
-  nuevoCliente: Cliente = {
-    cedula: '',
-    nombre: '',
-    direccion: '',
-    telefono: ''
-  };
-  mostraFormulario: boolean = false;
+  nuevoCliente: Cliente = { cedula: '', nombre: '', direccion: '', telefono: '' };
+  mostraFormulario = false;
   clienteEnEdicion: Cliente | null = null;
-  cargando: boolean = false;
-  error: string = '';
+  cargando = false;
+  error = '';
 
   constructor(private clienteService: ClienteService) {}
 
@@ -35,7 +30,7 @@ export class ListClientesComponent implements OnInit {
         this.cargando = false;
       },
       error: (err) => {
-        this.error = 'Error al cargar los clientes';
+        this.error = 'No se pudo conectar con el servidor. Verifique que el backend esté activo.';
         this.cargando = false;
         console.error(err);
       }
@@ -50,15 +45,8 @@ export class ListClientesComponent implements OnInit {
   }
 
   guardarCliente(): void {
-    if (!this.validarFormulario()) {
-      return;
-    }
-
-    if (this.clienteEnEdicion) {
-      this.actualizarCliente();
-    } else {
-      this.crearCliente();
-    }
+    if (!this.validarFormulario()) return;
+    this.clienteEnEdicion ? this.actualizarCliente() : this.crearCliente();
   }
 
   crearCliente(): void {
@@ -69,7 +57,7 @@ export class ListClientesComponent implements OnInit {
         this.mostraFormulario = false;
       },
       error: (err) => {
-        this.error = 'Error al crear el cliente';
+        this.error = this.extraerMensajeError(err, 'Error al crear el cliente');
         console.error(err);
       }
     });
@@ -82,54 +70,55 @@ export class ListClientesComponent implements OnInit {
   }
 
   actualizarCliente(): void {
-    if (this.clienteEnEdicion && this.clienteEnEdicion.id) {
-      this.clienteService.actualizarCliente(this.clienteEnEdicion.id, this.nuevoCliente).subscribe({
-        next: () => {
-          this.cargarClientes();
-          this.limpiarFormulario();
-          this.mostraFormulario = false;
-        },
-        error: (err) => {
-          this.error = 'Error al actualizar el cliente';
-          console.error(err);
-        }
-      });
-    }
+    if (!this.clienteEnEdicion?.id) return;
+    this.clienteService.actualizarCliente(this.clienteEnEdicion.id, this.nuevoCliente).subscribe({
+      next: () => {
+        this.cargarClientes();
+        this.limpiarFormulario();
+        this.mostraFormulario = false;
+      },
+      error: (err) => {
+        this.error = this.extraerMensajeError(err, 'Error al actualizar el cliente');
+        console.error(err);
+      }
+    });
   }
 
   eliminarCliente(id: number | undefined): void {
-    if (!id || !confirm('¿Está seguro de que desea eliminar este cliente?')) {
-      return;
-    }
-
+    if (!id || !confirm('¿Está seguro de que desea eliminar este cliente?')) return;
     this.clienteService.eliminarCliente(id).subscribe({
-      next: () => {
-        this.cargarClientes();
-      },
+      next: () => this.cargarClientes(),
       error: (err) => {
-        this.error = 'Error al eliminar el cliente';
+        this.error = this.extraerMensajeError(err, 'Error al eliminar el cliente');
         console.error(err);
       }
     });
   }
 
   validarFormulario(): boolean {
-    if (!this.nuevoCliente.cedula || !this.nuevoCliente.nombre || !this.nuevoCliente.direccion || !this.nuevoCliente.telefono) {
-      this.error = 'Por favor complete todos los campos';
-      return false;
-    }
+    if (!this.nuevoCliente.cedula.trim()) { this.error = 'La cédula es obligatoria'; return false; }
+    if (!this.nuevoCliente.nombre.trim()) { this.error = 'El nombre es obligatorio'; return false; }
+    if (!this.nuevoCliente.direccion.trim()) { this.error = 'La dirección es obligatoria'; return false; }
+    if (!this.nuevoCliente.telefono.trim()) { this.error = 'El teléfono es obligatorio'; return false; }
     this.error = '';
     return true;
   }
 
   limpiarFormulario(): void {
-    this.nuevoCliente = {
-      cedula: '',
-      nombre: '',
-      direccion: '',
-      telefono: ''
-    };
+    this.nuevoCliente = { cedula: '', nombre: '', direccion: '', telefono: '' };
     this.clienteEnEdicion = null;
     this.error = '';
+  }
+
+  private extraerMensajeError(err: any, fallback: string): string {
+    if (err?.error) {
+      // { "error": "mensaje" }  →  mensaje directo
+      if (typeof err.error === 'string') return err.error;
+      if (err.error.error) return err.error.error;
+      // { "campo": "mensaje", ... }  →  primer campo con error
+      const campos = Object.entries(err.error as Record<string, string>);
+      if (campos.length > 0) return campos.map(([c, m]) => `${c}: ${m}`).join(' | ');
+    }
+    return fallback;
   }
 }

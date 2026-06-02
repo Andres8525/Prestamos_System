@@ -8,7 +8,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -80,5 +83,15 @@ public class ClienteController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> manejarValidacion(MethodArgumentNotValidException ex) {
+        Map<String, String> errores = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(err -> {
+            String campo = ((FieldError) err).getField();
+            errores.put(campo, err.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errores);
     }
 }

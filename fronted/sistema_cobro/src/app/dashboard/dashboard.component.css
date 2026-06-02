@@ -14,28 +14,28 @@
   border-radius: 12px;
   padding: 20px 24px;
   box-shadow: 0 1px 3px rgba(0,0,0,.08);
-
-  .stat-label {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 8px;
-    opacity: 0.75;
-  }
-
-  .stat-value {
-    font-size: 36px;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  &.stat-total  { background: #1e293b; color: #f1f5f9; }
-  &.stat-green  { background: #dcfce7; color: #15803d; }
-  &.stat-yellow { background: #fef9c3; color: #a16207; }
-  &.stat-red    { background: #fee2e2; color: #b91c1c; }
-  &.stat-blue   { background: #dbeafe; color: #1d4ed8; }
 }
+
+.stat-card .stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  opacity: 0.75;
+}
+
+.stat-card .stat-value {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-total  { background: #1e293b; color: #f1f5f9; }
+.stat-green  { background: #dcfce7; color: #15803d; }
+.stat-yellow { background: #fef9c3; color: #a16207; }
+.stat-red    { background: #fee2e2; color: #b91c1c; }
+.stat-blue   { background: #dbeafe; color: #1d4ed8; }
 
 .sections-grid {
   display: grid;
@@ -51,11 +51,11 @@
   padding-bottom: 12px;
   margin-bottom: 16px;
   border-bottom: 2px solid #f1f5f9;
-
-  &.section-green  { color: #15803d; border-color: #bbf7d0; }
-  &.section-yellow { color: #a16207; border-color: #fde68a; }
-  &.section-red    { color: #b91c1c; border-color: #fecaca; }
 }
+
+.section-green  { color: #15803d; border-color: #bbf7d0; }
+.section-yellow { color: #a16207; border-color: #fde68a; }
+.section-red    { color: #b91c1c; border-color: #fecaca; }
 
 .client-list {
   display: flex;
@@ -70,10 +70,10 @@
   padding: 10px 12px;
   background: #f8fafc;
   border-radius: 8px;
+}
 
-  .client-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: #1e293b;
-  }
+.client-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e293b;
 }

@@ -15,7 +15,7 @@ public class ClienteRequestDTO {
     private String direccion;
 
     @NotBlank(message = "El teléfono es obligatorio")
-    @Pattern(regexp = "\\d{7,10}", message = "El teléfono debe tener entre 7 y 10 dígitos")
+    @Pattern(regexp = "[0-9\\s\\-\\+\\(\\)]{7,15}", message = "El teléfono debe tener entre 7 y 15 caracteres")
     private String telefono;
 
     public ClienteRequestDTO() {}
