@@ -1,0 +1,11 @@
+{
+  "installCommand": "cd fronted/sistema_cobro && npm ci",
+  "buildCommand": "cd fronted/sistema_cobro && npm run build",
+  "outputDirectory": "fronted/sistema_cobro/dist/sistema_cobro/browser",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
