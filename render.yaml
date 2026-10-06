@@ -10,4 +10,4 @@ services:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: ALLOWED_ORIGINS
-        value: http://localhost:4200
+        value: https://*.vercel.app,http://localhost:4200

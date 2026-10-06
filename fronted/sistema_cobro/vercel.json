@@ -1,6 +1,6 @@
 {
-  "installCommand": "rm -rf node_modules && npm install --legacy-peer-deps",
-  "buildCommand": "node node_modules/@angular/cli/bin/ng.js build --configuration production",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist/sistema_cobro/browser",
   "rewrites": [
     {
